@@ -1,4 +1,5 @@
-// import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
+import { fork } from 'child_process';
 import { validateNumber, definePaymentSystem } from '../basic';
 
 test.each([
@@ -36,45 +37,54 @@ test.each([
   },
 );
 
-
-/*  jest.setTimeout(30000);
-describe('card number validator', () => {
+jest.setTimeout(30000);
+describe('Credit Card Validator form', () => {
   let browser = null;
   let page = null;
+  let server = null;
   const baseUrl = 'http://localhost:9000';
+
   beforeAll(async () => {
+    server = fork(`${__dirname}/e2e.server.js`);
+    await new Promise((resolve, reject) => {
+      server.on('error', reject);
+      server.on('message', (message) => {
+        if (message === 'ok') {
+          resolve();
+        }
+      });
+    });
+
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: true,
+    //  headless: false,
+    //  slowMo: 250,
+    //  devtools: true,
     });
     page = await browser.newPage();
   });
+
   afterAll(async () => {
     await browser.close();
+    server.kill();
   });
 
-describe('card number validator', () => {
-    test('should validate card number', async () => {
-      await page.goto(baseUrl);
-      const form = await page.$('[id=validator-container]');
-      const input = await form.$('[id=field]');
-      await input.type('5105 1051 0510 5100');
-      const submit = await form.$('[id=validate-button]');
-      submit.click();
-      await page.waitForSelector('[id=valid]');
-    });
+  test('should validate card number', async () => {
+    await page.goto(baseUrl);
+    const form = await page.$('[id=validator-container]');
+    const input = await form.$('[id=field]');
+    await input.type('5105 1051 0510 5100');
+    const submit = await form.$('[id=validate-button]');
+    submit.click();
+    await page.waitForSelector('[id=valid]');
   });
 
-  describe('card number validator 2', () => {
-    test('should not validate card number', async () => {
-      await page.goto(baseUrl);
-      const form = await page.$('[id=validator-container]');
-      const input = await form.$('[id=field]');
-      await input.type('4211 1111 1111 1111');
-      const submit = await form.$('[id=validate-button]');
-      submit.click();
-      await page.waitForSelector('[id=not-valid]');
-    });
+  test('should not validate card number', async () => {
+    await page.goto(baseUrl);
+    const form = await page.$('[id=validator-container]');
+    const input = await form.$('[id=field]');
+    await input.type('4211 1111 1111 1111');
+    const submit = await form.$('[id=validate-button]');
+    submit.click();
+    await page.waitForSelector('[id=not-valid]');
   });
-}); */
+});
