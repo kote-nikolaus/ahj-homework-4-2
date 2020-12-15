@@ -43,11 +43,11 @@ describe('card number validator', () => {
   let page = null;
   const baseUrl = 'http://localhost:9000';
   beforeAll(async () => {
-    browser = await puppeteer.launch({
-    //  headless: false,
+    browser = await puppeteer.launch(
+    // {headless: false,
     //  slowMo: 100,
-    //  devtools: true,
-    });
+    //  devtools: true}
+    );
     page = await browser.newPage();
   });
   afterAll(async () => {
