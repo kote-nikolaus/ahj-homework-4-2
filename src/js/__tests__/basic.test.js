@@ -44,9 +44,9 @@ describe('card number validator', () => {
   const baseUrl = 'http://localhost:9000';
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: true,
+    //  headless: false,
+    //  slowMo: 100,
+    //  devtools: true,
     });
     page = await browser.newPage();
   });
