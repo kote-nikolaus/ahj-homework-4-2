@@ -76,6 +76,7 @@ describe('Credit Card Validator form', () => {
     const submit = await form.$('[id=validate-button]');
     submit.click();
     await page.waitForSelector('[id=valid]');
+    await browser.close();
   });
 
   test('should not validate card number', async () => {
