@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
 import { validateNumber, definePaymentSystem } from '../basic';
 
 test.each([
@@ -37,24 +37,24 @@ test.each([
 );
 
 
-jest.setTimeout(30000);
+/*  jest.setTimeout(30000);
 describe('card number validator', () => {
   let browser = null;
   let page = null;
   const baseUrl = 'http://localhost:9000';
   beforeAll(async () => {
-    browser = await puppeteer.launch(
-    // {headless: false,
-    //  slowMo: 100,
-    //  devtools: true}
-    );
+    browser = await puppeteer.launch({
+      headless: false,
+      slowMo: 100,
+      devtools: true,
+    });
     page = await browser.newPage();
   });
   afterAll(async () => {
     await browser.close();
   });
 
-  describe('card number validator', () => {
+describe('card number validator', () => {
     test('should validate card number', async () => {
       await page.goto(baseUrl);
       const form = await page.$('[id=validator-container]');
@@ -77,4 +77,4 @@ describe('card number validator', () => {
       await page.waitForSelector('[id=not-valid]');
     });
   });
-});
+}); */
