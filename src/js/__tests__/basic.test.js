@@ -45,7 +45,7 @@ describe('Credit Card Validator form', () => {
   const baseUrl = 'http://localhost:9000';
 
   beforeAll(async () => {
-    server = fork(`../ahj-homework-4-2/src/js/e2e.server.js`);
+    server = fork('../ahj-homework-4-2/src/js/e2e.server.js');
     await new Promise((resolve, reject) => {
       server.on('error', reject);
       server.on('message', (message) => {
