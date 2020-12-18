@@ -56,49 +56,8 @@ describe('Credit Card Validator form', () => {
     });
 
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 100,
-      devtools: true,
-    });
-    page = await browser.newPage();
-  });
-
-  afterAll(async () => {
-    await browser.close();
-    server.kill();
-  });
-
-  test('should validate card number', async () => {
-    await page.goto(baseUrl);
-    const form = await page.$('[id=validator-container]');
-    const input = await form.$('[id=field]');
-    await input.type('5105 1051 0510 5100');
-    const submit = await form.$('[id=validate-button]');
-    submit.click();
-    await page.waitForSelector('[id=valid]');
-  });
-});
-
-describe('Credit Card Validator form', () => {
-  let browser = null;
-  let page = null;
-  let server = null;
-  const baseUrl = 'http://localhost:9000';
-
-  beforeAll(async () => {
-    server = fork('../ahj-homework-4-2/src/js/e2e.server.js');
-    await new Promise((resolve, reject) => {
-      server.on('error', reject);
-      server.on('message', (message) => {
-        if (message === 'ok') {
-          resolve();
-        }
-      });
-    });
-
-    browser = await puppeteer.launch({
     //  headless: false,
-    //  slowMo: 200,
+    //  slowMo: 100,
     //  devtools: true,
     });
     page = await browser.newPage();
@@ -109,8 +68,26 @@ describe('Credit Card Validator form', () => {
     server.kill();
   });
 
+  test('should validate card number', async () => {
+    await Promise.all([
+      page.goto(baseUrl),
+      page.waitForNavigation(),
+    ]);
+
+    const form = await page.$('[id=validator-container]');
+    const input = await form.$('[id=field]');
+    await input.type('5105 1051 0510 5100');
+    const submit = await form.$('[id=validate-button]');
+    submit.click();
+    await page.waitForSelector('[id=valid]');
+  });
+
   test('should not validate card number', async () => {
-    await page.goto(baseUrl);
+    await Promise.all([
+      page.goto(baseUrl),
+      page.waitForNavigation(),
+    ]);
+
     const form = await page.$('[id=validator-container]');
     const input = await form.$('[id=field]');
     await input.type('4211 1111 1111 1111');
