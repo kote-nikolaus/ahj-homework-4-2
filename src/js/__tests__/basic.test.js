@@ -56,9 +56,9 @@ describe('Credit Card Validator form', () => {
     });
 
     browser = await puppeteer.launch({
-    //  headless: false,
-    //  slowMo: 250,
-    //  devtools: true,
+      headless: false,
+      slowMo: 100,
+      devtools: true,
     });
     page = await browser.newPage();
   });
@@ -74,23 +74,17 @@ describe('Credit Card Validator form', () => {
     const input = await form.$('[id=field]');
     await input.type('5105 1051 0510 5100');
     const submit = await form.$('[id=validate-button]');
-    await Promise.all([
-      page.waitForNavigation(),
-      submit.click(),
-    ]);
+    submit.click();
     await page.waitForSelector('[id=valid]');
   });
 
-  test('should not validate card number', async () => {
+ test('should not validate card number', async () => {
     await page.goto(baseUrl);
     const form = await page.$('[id=validator-container]');
     const input = await form.$('[id=field]');
     await input.type('4211 1111 1111 1111');
     const submit = await form.$('[id=validate-button]');
-    await Promise.all([
-      page.waitForNavigation(),
-      submit.click(),
-    ]);
+    submit.click();
     await page.waitForSelector('[id=not-valid]');
   });
 });
