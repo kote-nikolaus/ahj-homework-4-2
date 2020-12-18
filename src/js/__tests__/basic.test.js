@@ -78,7 +78,7 @@ describe('Credit Card Validator form', () => {
     const input = await form.$('[id=field]');
     await input.type('5105 1051 0510 5100');
     const submit = await form.$('[id=validate-button]');
-    submit.click();
+    await submit.click();
     await page.waitForSelector('[id=valid]');
   });
 
@@ -92,7 +92,7 @@ describe('Credit Card Validator form', () => {
     const input = await form.$('[id=field]');
     await input.type('4211 1111 1111 1111');
     const submit = await form.$('[id=validate-button]');
-    submit.click();
+    await submit.click();
     await page.waitForSelector('[id=not-valid]');
   });
 });
