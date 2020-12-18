@@ -110,12 +110,12 @@ describe('Credit Card Validator form', () => {
   });
 
   test('should not validate card number', async () => {
-     await page.goto(baseUrl);
-     const form = await page.$('[id=validator-container]');
-     const input = await form.$('[id=field]');
-     await input.type('4211 1111 1111 1111');
-     const submit = await form.$('[id=validate-button]');
-     submit.click();
-     await page.waitForSelector('[id=not-valid]');
+    await page.goto(baseUrl);
+    const form = await page.$('[id=validator-container]');
+    const input = await form.$('[id=field]');
+    await input.type('4211 1111 1111 1111');
+    const submit = await form.$('[id=validate-button]');
+    submit.click();
+    await page.waitForSelector('[id=not-valid]');
   });
 });
